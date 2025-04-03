@@ -1,0 +1,46 @@
+{
+  "name": "movietowatch",
+  "version": "1.0.0",
+  "description": "A website to manage movies to watch",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node serverjs",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Benarivo66/movieToWatch.git"
+  },
+  "keywords": [
+    "movies",
+    "mongoDB",
+    "swagger",
+    "nodejs",
+    "express",
+    "OAuth"
+  ],
+  "author": "Anthony Eghosasere Izekor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Benarivo66/movieToWatch/issues"
+  },
+  "homepage": "https://github.com/Benarivo66/movieToWatch#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
+    "mongoose": "^8.13.1",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "swagger-autogen": "^2.23.7"
+  }
+}
