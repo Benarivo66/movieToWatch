@@ -46,6 +46,31 @@ validate.createUserRules = () => {
       .trim()
       .notEmpty()
       .withMessage("Please provide a phone number"),
+      body().custom((value, { req }) => {
+        const allowedFields = [
+          "firstName",
+          "lastName",
+          "email",
+          "dob",
+          "country",
+          "sex",
+          "phone",
+          "watchlists"
+        ];
+        const receivedFields = Object.keys(req.body);
+  
+        const extraFields = receivedFields.filter(
+          (field) => !allowedFields.includes(field)
+        );
+  
+        if (extraFields.length > 0) {
+          throw new Error(
+            `Unexpected fields provided: ${extraFields.join(", ")}`
+          );
+        }
+  
+        return true;
+      }),  
   ];
 };
 
@@ -116,6 +141,7 @@ validate.updateUserRules = () => {
         "country",
         "sex",
         "phone",
+        "watchlists"
       ];
       const receivedFields = Object.keys(req.body);
 
