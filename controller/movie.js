@@ -19,10 +19,10 @@ const createMovie = async (req, res) => {
     };
 
     const movie = await MovieModel.createMovie(newMovie);
-    res.status(201).json({ message: "User created successfully", movie });
+    res.status(201).json({ message: "Movie created successfully", movie });
 
   } catch (error) {
-    console.error("Error creating user:", error);
+    console.error("Error creating movie:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -36,7 +36,7 @@ const updateMovie = async (req, res) => {
             return res.status(400).json({error: "Update at least one field"});
         }
 
-        const existingMovie = await UserModel.getMovieById(id);
+        const existingMovie = await MovieModel.getMovieById(id);
         if (!existingMovie) {
             return res.status(404).json({ error: "Movie not found" });
         }
@@ -45,10 +45,10 @@ const updateMovie = async (req, res) => {
 
         res.status(200).json({
             message: "Movie updated successfully",
-            user: updatedMovie
+            movie: updatedMovie
         });
     } catch (error) {
-        console.error("Error updating user:", error);
+        console.error("Error updating movie:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
