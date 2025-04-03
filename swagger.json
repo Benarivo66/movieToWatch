@@ -38,7 +38,8 @@
                   "country": { "type": "string", "example": "USA" },
                   "email": { "type": "string", "example": "johndoe@example.com" },
                   "sex": { "type": "string", "enum": ["Male", "Female"], "example": "Male" },
-                  "phone": { "type": "string", "example": "1234567890" }
+                  "phone": { "type": "string", "example": "1234567890" },
+                  "watchlists": { "type": "array", "example": []}
                 }
               }
             }
@@ -72,7 +73,49 @@
             "404": { "description": "Not Found" },
             "500": { "description": "Internal Server Error" }
           }
+        },
+        "put": {
+    "description": "Update user information",
+    "security": [{ "CookieAuth": [] }],
+    "parameters": [
+      { "name": "id", "in": "path", "required": true, "type": "string" }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "firstName": { "type": "string", "example": "John" },
+              "lastName": { "type": "string", "example": "Doe" },
+              "email": { "type": "string", "example": "johndoe@example.com" },
+              "phone": { "type": "string", "example": "1234567890" },
+              "watchlists": { "type": "array", "example": []}
+            }
+          }
         }
+      }
+    },
+    "responses": {
+      "200": { "description": "User updated successfully" },
+      "400": { "description": "Bad Request" },
+      "404": { "description": "User Not Found" },
+      "500": { "description": "Internal Server Error" }
+    }
+  },
+  "delete": {
+    "description": "Delete a user by ID",
+    "security": [{ "CookieAuth": [] }],
+    "parameters": [
+      { "name": "id", "in": "path", "required": true, "type": "string" }
+    ],
+    "responses": {
+      "204": { "description": "User deleted successfully" },
+      "404": { "description": "User Not Found" },
+      "500": { "description": "Internal Server Error" }
+    }
+  }
       },
       "/movies": {
         "post": {
