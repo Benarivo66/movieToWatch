@@ -35,6 +35,29 @@ validate.createMovieRules = () => {
       .withMessage("Please provide a description"),
 
     body("status").trim().notEmpty().withMessage("Please provide a status"),
+    body().custom((value, { req }) => {
+        const allowedFields = [
+          "genre",
+          "title",
+          "releaseYear",
+          "duration",
+          "description",
+          "status"
+        ];
+        const receivedFields = Object.keys(req.body);
+  
+        const extraFields = receivedFields.filter(
+          (field) => !allowedFields.includes(field)
+        );
+  
+        if (extraFields.length > 0) {
+          throw new Error(
+            `Unexpected fields provided: ${extraFields.join(", ")}`
+          );
+        }
+  
+        return true;
+      }),
   ];
 };
 
