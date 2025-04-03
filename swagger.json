@@ -75,38 +75,39 @@
           }
         },
         "put": {
-    "description": "Update user information",
-    "security": [{ "CookieAuth": [] }],
-    "parameters": [
-      { "name": "id", "in": "path", "required": true, "type": "string" }
-    ],
-    "requestBody": {
-      "required": true,
-      "content": {
-        "application/json": {
-          "schema": {
-            "type": "object",
-            "properties": {
-              "firstName": { "type": "string", "example": "John" },
-              "lastName": { "type": "string", "example": "Doe" },
-              "email": { "type": "string", "example": "johndoe@example.com" },
-              "phone": { "type": "string", "example": "1234567890" },
-              "watchlists": { "type": "array", "example": []}
+        "description": "Update a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": { "type": "string" },
+                "lastName": { "type": "string" },
+                "email": { "type": "string" },
+                "phone": { "type": "string" },
+                "watchlists": { "type": "array" }
+              }
             }
           }
+        ],
+        "responses": {
+          "200": { "description": "User updated successfully" },
+          "400": { "description": "Bad Request" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
-      }
-    },
-    "responses": {
-      "200": { "description": "User updated successfully" },
-      "400": { "description": "Bad Request" },
-      "404": { "description": "User Not Found" },
-      "500": { "description": "Internal Server Error" }
-    }
-  },
+      },
   "delete": {
     "description": "Delete a user by ID",
-    "security": [{ "CookieAuth": [] }],
     "parameters": [
       { "name": "id", "in": "path", "required": true, "type": "string" }
     ],
