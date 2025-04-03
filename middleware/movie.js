@@ -58,8 +58,8 @@ validate.updateMovieRules = () => {
 
     body("genre")
       .optional()
-      .isArray({ min: 1 })
-      .isLength({ min: 1 })
+      .trim()
+      .notEmpty()
       .withMessage("Please provide a genre"),
 
     body("releaseYear")
