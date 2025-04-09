@@ -32,15 +32,15 @@ validate.createUserRules = () => {
 
     body("sex").trim().notEmpty().withMessage("Please provide a sex"),
 
-    // body("watchlists")
-    //   .isArray({ min: 1 })
-    //   .withMessage("Watchlists must be an array with at least one entry")
-    //   .custom((value) => {
-    //     if (!value.every((id) => mongoose.Types.ObjectId.isValid(id))) {
-    //       throw new Error("Each watchlist must be a valid ObjectId");
-    //     }
-    //     return true;
-    //   }),
+    body("watchlists")
+      .isArray({ min: 1 })
+      .withMessage("Watchlists must be an array with at least one entry")
+      .custom((value) => {
+        if (!value.every((id) => mongoose.Types.ObjectId.isValid(id))) {
+          throw new Error("Each watchlist must be a valid ObjectId");
+        }
+        return true;
+      }),
 
     body("phone")
       .trim()

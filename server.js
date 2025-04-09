@@ -13,6 +13,8 @@ const {authentication} = require("./middleware/auth");
 const db = require("./db/connect");
 const usersRoute = require("./routes/user");
 const moviesRoute = require("./routes/movie");
+const reviewsRoute = require("./routes/review");
+const watchlistsRoute = require("./routes/watchlist");
 
 const corsOptions = {
   origin: [process.env.HOST],
@@ -36,7 +38,8 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.HOST.trim()}/auth/google/callback`,
+      // callbackURL: `${process.env.HOST.trim()}/auth/google/callback`,
+      callbackURL: "/auth/google/callback"
     },
     (accessToken, refreshToken, profile, done) => {
       return done(null, profile);
@@ -74,6 +77,8 @@ app.get("/dashboard", authentication, (req, res, next) => {
 });
 app.use("/users", usersRoute);
 app.use("/movies", moviesRoute);
+app.use("/reviews", reviewsRoute);
+app.use("/watchlists", watchlistsRoute);
 
 const host = process.env.HOST;
 

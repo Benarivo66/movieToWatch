@@ -6,7 +6,7 @@
       "version": "1.0.0"
     },
     "basePath": "/",
-    "schemes": ["https", "http"],
+    "schemes": ["http", "https"],
     "securityDefinitions": {
       "CookieAuth": {
         "type": "apiKey",
@@ -39,7 +39,7 @@
                   "email": { "type": "string", "example": "johndoe@example.com" },
                   "sex": { "type": "string", "enum": ["Male", "Female"], "example": "Male" },
                   "phone": { "type": "string", "example": "1234567890" },
-                  "watchlists": { "type": "array", "example": []}
+                  "watchlists": { "type": "array", "items": {"type": "string" }, "example": ["60c72b2f9b1d8e001c8d4567"]}
                 }
               }
             }
@@ -94,7 +94,7 @@
                 "lastName": { "type": "string" },
                 "email": { "type": "string" },
                 "phone": { "type": "string" },
-                "watchlists": { "type": "array" }
+                "watchlists": { "type": "array", "items": {"type": "string" }, "example":"60c72b2f9b1d8e001c8d4567" }
               }
             }
           }
@@ -209,6 +209,198 @@
       },
       "delete": {
         "description": "Delete a movie by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+    "/reviews": {
+        "post": {
+          "description": "Create a new review",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": { "type": "string", "example": "67ed63c31d3a31dc75ce4255" },
+                  "movieId": { "type": "string", "example": "67ed63c31d3a31dc75ce4256" },
+                  "rating": { "type": "integer", "example": 4 },
+                  "comment": { "type": "string", "example": "The movie is good" }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": { "description": "Review created successfully" },
+            "400": { "description": "Bad Request" },
+            "500": { "description": "Internal Server Error" }
+          }
+        },
+        "get": {
+          "description": "Retrieve all reviews",
+          "responses": {
+            "200": { "description": "OK" },
+            "500": { "description": "Internal Server Error" }
+          }
+        }
+      },
+      "/reviews/{id}": {
+      "get": {
+        "description": "Retrieve a review by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+      "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "put": {
+        "description": "Update a review by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rating": { "type": "integer" },
+                "comment": { "type": "string" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Review updated successfully" },
+          "400": { "description": "Bad Request" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "delete": {
+        "description": "Delete a review by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+    "/watchlists": {
+        "post": {
+          "description": "Create a new watchlist",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": { "type": "string", "example": "67ed63c31d3a31dc75ce4257" },
+                  "title": { "type": "string", "example": "My funny watchlist" },
+                  "movies": { "type": "array", "items": {"type": "string"}, "example": ["60c72b2f9b1d8e001c8d4567"] },
+                  "sharedWith": { "type": "array", "items": {"type": "string"}, "example": ["60c72b2f9b1d8e001c8d4567"] }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": { "description": "Watchlist created successfully" },
+            "400": { "description": "Bad Request" },
+            "500": { "description": "Internal Server Error" }
+          }
+        },
+        "get": {
+          "description": "Retrieve all watchlists",
+          "responses": {
+            "200": { "description": "OK" },
+            "500": { "description": "Internal Server Error" }
+          }
+        }
+      },
+      "/watchlists/{id}": {
+      "get": {
+        "description": "Retrieve a watchlist by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+      "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "put": {
+        "description": "Update a watchlist by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "movies": { "type": "array", "items": {"type": "string"}, "example": ["60c72b2f9b1d8e001c8d4567"] },
+                "sharedWith": { "type": "array", "items": {"type": "string"}, "example": ["60c72b2f9b1d8e001c8d4567"] }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Watchlist updated successfully" },
+          "400": { "description": "Bad Request" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "delete": {
+        "description": "Delete a watchlist by ID",
         "parameters": [
           {
             "name": "id",
